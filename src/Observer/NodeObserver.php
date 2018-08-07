@@ -38,11 +38,6 @@ class NodeObserver {
         
         $model->version_id  = IdCreate::onlyId();
         
-        $change = [
-            'from'   => array_only($model->getOriginal(), array_keys($model->getDirty())),
-            'to'   => array_only($model->toArray(), array_keys($model->getDirty())),
-        ];
-        
         return $model;
     }
     
@@ -53,14 +48,12 @@ class NodeObserver {
      */
     public function saved(Model $model){
         
-        $model->version_id  = IdCreate::onlyId();
-        
         $change = [
             'from'   => array_only($model->getOriginal(), array_keys($model->getDirty())),
             'to'   => array_only($model->toArray(), array_keys($model->getDirty())),
         ];
 
-        logger()->debug($this->format($change));
+        event(new ConfigChanged($model->id, $change));
         
         return $model;
     }

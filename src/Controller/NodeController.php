@@ -11,6 +11,7 @@ use Encore\Admin\Controllers\ModelForm;
 use OkamiChen\ConfigureServer\Entity\ConfigureGroup;
 use OkamiChen\ConfigureServer\Entity\ConfigureNode;
 use Encore\Admin\Grid\Displayers\Actions;
+use OkamiChen\ConfigureServer\Service\ConfigureServer;
 
 class NodeController extends Controller
 {
@@ -23,7 +24,8 @@ class NodeController extends Controller
      */
     public function index()
     {
-        configure_server_config();
+        $cache = ConfigureServer::all();
+        ConfigureServer::clear();
         return Admin::content(function (Content $content) {
 
             $content->header('配置管理');
