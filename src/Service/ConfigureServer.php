@@ -9,7 +9,7 @@
 namespace OkamiChen\ConfigureServer\Service;
 
 use OkamiChen\ConfigureServer\Entity\ConfigureNode;
-use Cache;
+
 /**
  * Description of ConfigureServer
  * @date 2018-8-7 15:46:24
@@ -36,7 +36,7 @@ class ConfigureServer {
         }
         
         $items  = $rows->toArray();
-        $cache = \Cache::remember(self::$cacheKey, 5 , function() use($items){
+        $cache = cache()->remember(self::$cacheKey, 5 , function() use($items){
             $data   = [];
             foreach ($items as $key => $row) {
                 $json   = json_decode($row['svalue'], true);
