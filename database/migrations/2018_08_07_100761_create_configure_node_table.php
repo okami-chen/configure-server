@@ -15,6 +15,7 @@ class CreateConfigureNodeTable extends Migration
     {
         Schema::create('configure_node', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_active')->default(1);
             $table->string('version_id', 20);
             $table->unsignedBigInteger('group_id');
             

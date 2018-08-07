@@ -11,7 +11,7 @@ use Encore\Admin\Controllers\ModelForm;
 use OkamiChen\ConfigureServer\Entity\ConfigureGroup;
 use OkamiChen\ConfigureServer\Entity\ConfigureNode;
 use Encore\Admin\Grid\Displayers\Actions;
-use OkamiChen\ConfigureServer\Service\ConfigureServer;
+use Encore\Admin\Grid\Filter;
 
 class NodeController extends Controller
 {
@@ -24,8 +24,6 @@ class NodeController extends Controller
      */
     public function index()
     {
-        $cache = ConfigureServer::all();
-        ConfigureServer::clear();
         return Admin::content(function (Content $content) {
 
             $content->header('配置管理');
@@ -76,10 +74,17 @@ class NodeController extends Controller
     protected function grid()
     {
         return Admin::grid(ConfigureNode::class, function (Grid $grid) {
-
+            
             $grid->id('编号')->sortable();
+
             $grid->column('group.title', '组名称');
             $grid->column('group.ip', '组IP');
+            $states = [
+                'on'  => ['value' => 1, 'text' => '激活', 'color' => 'success'],
+                'off' => ['value' => 0, 'text' => '禁用', 'color' => 'danger'],
+            ];
+            
+            $grid->column('is_active', '状态')->switch($states);
             $grid->column('skey', '键名');
             $grid->column('svalue', '键值')->display(function($value){
                 if(json_decode($value)){
@@ -92,8 +97,18 @@ class NodeController extends Controller
             $grid->updated_at('更新时间');
             
             $grid->model()->with(['group'])->orderBy('id','desc');
+            
             $grid->actions(function(Actions $action){
                 $action->disableDelete();
+            });
+            
+            $grid->filter(function(Filter $filter){
+                $options    = [
+                    '1' => '激活',
+                    '0' => '禁用',
+                ];
+                $filter->equal('is_active','状态')->select($options);
+                $filter->equal('group_id', '分组')->select(ConfigureGroup::pluck('title','id'));
             });
         });
     }
@@ -108,7 +123,11 @@ class NodeController extends Controller
         return Admin::form(ConfigureNode::class, function (Form $form) {
 
             $form->display('id', '编号');
-
+            $states = [
+                'on'  => ['value' => 1, 'text' => '激活', 'color' => 'success'],
+                'off' => ['value' => 0, 'text' => '禁用', 'color' => 'danger'],
+            ];
+            $form->switch('is_active','状态')->states($states);
             $form->select('group_id', '分组')
                     ->options(ConfigureGroup::pluck('title','id'));
             $form->text('skey', '键名')
