@@ -17,10 +17,7 @@
     "autoload": {
         "psr-4": {
             "OkamiChen\\ConfigureServer\\":"src/"
-        },
-        "files": [
-            "src/helper.php"
-        ]
+        }
     },
     "extra": {
         "laravel": {
