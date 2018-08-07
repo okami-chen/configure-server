@@ -21,11 +21,21 @@ php aratisan migrate
 `/module/confiurge/server/group`
 > 记得加上`laravel-admin`的路由前缀
 
-## 缓存缓存
+## 配置
+
+获取配置选项
 
 ```php
 use OkamiChen\ConfigureServer\Service\ConfigureServer;
 
 return reponse(ConfigureServer::all());
+```
+
+清理配置缓存
+
+```php
+use OkamiChen\ConfigureServer\Service\ConfigureServer;
+
+return reponse(ConfigureServer::clear());
 ```
 
