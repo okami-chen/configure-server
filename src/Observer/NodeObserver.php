@@ -11,6 +11,7 @@ namespace OkamiChen\ConfigureServer\Observer;
 use Illuminate\Database\Eloquent\Model;
 use OkamiChen\ConfigureServer\Service\IdCreate;
 use OkamiChen\ConfigureServer\Event\ConfigChanged;
+use OkamiChen\ConfigureServer\Service\Configure;
 
 /**
  * Description of NodeObserver
@@ -47,6 +48,8 @@ class NodeObserver {
      * @return Model
      */
     public function saved(Model $model){
+        
+        Configure::clear();
         
         $change = [
             'from'   => array_only($model->getOriginal(), array_keys($model->getDirty())),

@@ -15,7 +15,7 @@ use OkamiChen\ConfigureServer\Entity\ConfigureNode;
  * @date 2018-8-7 15:46:24
  * @author dehua
  */
-class ConfigureServer {
+class Configure {
     
     
     static $cacheKey    = 'configure:server';
