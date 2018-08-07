@@ -1,0 +1,29 @@
+{
+    "name": "okami-chen/configure-server",
+    "type": "library",
+    "keywords": ["laravel","php","configure"],
+    "description": "configure-server module",
+    "homepage": "https://github.com/okami-chen/configure-server",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "OkamiChen",
+            "email": "x25125x@126.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OkamiChen\\ConfigureServer\\":"src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OkamiChen\\ConfigureServer\\ServerServiceProvider"
+            ]
+        }
+    }
+}
