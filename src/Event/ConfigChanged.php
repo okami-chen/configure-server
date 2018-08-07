@@ -14,6 +14,11 @@ class ConfigChanged
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    protected $id;
+    
+    protected $change;
+
+
     /**
      * Create a new event instance.
      *
@@ -21,7 +26,15 @@ class ConfigChanged
      */
     public function __construct($id, $change)
     {
-        //
+        $this->id       = $id;
+        $this->change   = $change;
+    }
+    
+    public function toArray(){
+        return [
+            'id'        => $this->id,
+            'change'    => $this->change
+        ];
     }
 
     /**

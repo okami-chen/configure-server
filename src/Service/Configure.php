@@ -29,7 +29,8 @@ class Configure {
         
         $data   = [];
         
-        $rows   = ConfigureNode::get(['skey','svalue']);
+        $rows   = ConfigureNode::where('is_active', 1)
+                ->get(['skey','svalue']);
         
         if(!count($rows)){
             return $data;
